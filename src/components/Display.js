@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchAvaibleCountres, fetchNearestCity } from '../actions/chosenCityActions';
 
 class Display extends Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.fetchAvaibleCountres();
     this.props.fetchNearestCity();
   }
@@ -23,7 +23,7 @@ class Display extends Component {
 
 const mapStateToProps = (state) => ({
   avaibleCoutres: state.chosenCityReducer.avaibleCoutres,
-  nearestCity: state.chosenCityReducer.nearestCity
+  nearestCity: state.chosenCityReducer.nearestCity,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchAvaibleCountres: () => dispatch(fetchAvaibleCountres()),
