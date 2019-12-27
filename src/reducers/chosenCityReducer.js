@@ -1,8 +1,9 @@
-import { FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY } from '../actions/types';
+import { FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY } from '../actions/types';
 
 const initialState = {
   avaibleCoutres: [],
   nearestCity: [],
+  statesInCountry: [],
 };
 
 export const chosenCityReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ export const chosenCityReducer = (state = initialState, action) => {
       return {
         ...state,
         nearestCity: action.data,
+      };
+    case FETCH_STATE_IN_COUNTRY:
+      return {
+        ...state,
+        statesInCountry: action.data,
       };
     default:
       return {

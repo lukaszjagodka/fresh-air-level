@@ -1,4 +1,4 @@
-import { FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY } from './types';
+import { FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY/* ,FETCH_CITIES_IN_STATE */} from './types';
 import { API_KEY } from '../config/config';
 
 export const fetchAvaibleCountres = () => (dispatch) => {
@@ -8,12 +8,12 @@ export const fetchAvaibleCountres = () => (dispatch) => {
       if (updateAvaibleCountres) {
         dispatch({
           type: FETCH_AVAILBE_COUNTRES,
-          data: updateAvaibleCountres,
+          data: updateAvaibleCountres.data,
         });
       }
     }).catch((err) => console.log(err));
 };
-// 6134f3b1-85f3-4e0c-ae0b-23f7dec6478e
+
 export const fetchNearestCity = () => (dispatch) => {
   fetch(`http://api.airvisual.com/v2/nearest_city?key=${API_KEY}`)
     .then((res) => res.json())
@@ -21,10 +21,27 @@ export const fetchNearestCity = () => (dispatch) => {
       if (res) {
         dispatch({
           type: FETCH_NEAREST_CITY,
-          data: res,
+          data: res.data,
         });
       }
     }).catch((err) => {
       console.log(err);
     });
 };
+
+export const fetchStatesInCountry = (country) => (dispatch) => {
+  fetch(`http://api.airvisual.com/v2/states?country=${country}&key=${API_KEY}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        dispatch({
+          type: FETCH_STATE_IN_COUNTRY,
+          data: data.data,
+        });
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
