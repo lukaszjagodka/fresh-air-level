@@ -1,4 +1,6 @@
-import { FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY/* ,FETCH_CITIES_IN_STATE */} from './types';
+import {
+  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE,
+} from './types';
 import { API_KEY } from '../config/config';
 
 export const fetchAvaibleCountres = () => (dispatch) => {
@@ -45,3 +47,18 @@ export const fetchStatesInCountry = (country) => (dispatch) => {
     });
 };
 
+export const fetchCitiesInState = (state, country) => (dispatch) => {
+  fetch(`api.airvisual.com/v2/cities?state=${state}&counFtry=${country}&key=${API_KEY}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        dispatch({
+          type: FETCH_CITIES_IN_STATE,
+          data: data.data,
+        });
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+};
