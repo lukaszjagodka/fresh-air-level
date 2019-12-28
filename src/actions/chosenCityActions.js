@@ -1,5 +1,5 @@
 import {
-  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE,
+  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE, FETCH_SPECIFIED_DATA_FROM_CITY
 } from './types';
 import { API_KEY } from '../config/config';
 
@@ -35,7 +35,7 @@ export const fetchStatesInCountry = (country) => (dispatch) => {
   fetch(`http://api.airvisual.com/v2/states?country=${country}&key=${API_KEY}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data) {
         dispatch({
           type: FETCH_STATE_IN_COUNTRY,
@@ -47,18 +47,28 @@ export const fetchStatesInCountry = (country) => (dispatch) => {
     });
 };
 
-export const fetchCitiesInState = (state, country) => (dispatch) => {
-  fetch(`api.airvisual.com/v2/cities?state=${state}&counFtry=${country}&key=${API_KEY}`)
+export const fetchCitiesInState = (stateSelected, countrySelected) => (dispatch) => {
+  fetch(`http://api.airvisual.com/v2/cities?state=${stateSelected}&country=${countrySelected}&key=${API_KEY}`)
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      if (data) {
-        dispatch({
-          type: FETCH_CITIES_IN_STATE,
-          data: data.data,
-        });
-      }
+    .then((res) => {
+      // console.log(res.data, 'fetchCitiesInState');
+      dispatch({
+        type: FETCH_CITIES_IN_STATE,
+        data: res.data,
+      });
     }).catch((err) => {
       console.log(err);
     });
+};
+
+export const fetchSpecifiedDataFromCity = (citySelected, stateSelected, countrySelected) => (dispatch) => {
+  fetch(`http://api.airvisual.com/v2/city?city=${citySelected}&state=${stateSelected}&country=${countrySelected}&key=${API_KEY}`)
+  .then((res)=> res.json())
+  .then(res => {
+    console.log(res.data)
+    dispatch({
+      type: FETCH_SPECIFIED_DATA_FROM_CITY,
+      data: res.data
+    });
+  }).catch(err => console.log(err));
 };
