@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SpecifiedDataDisplay from './SpecyfiedDataDisplay'
 import { connect } from 'react-redux';
 import { 
   fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity
@@ -33,12 +34,14 @@ class Display extends Component {
     this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState )
   }
   render() {
-    const { avaibleCoutres, statesInCountry, citiesInState } = this.props;
+    const { avaibleCoutres, statesInCountry, citiesInState, specyfiedDataFromCity } = this.props;
     return (
-      <div className="containerGroup" style={{padding: 30}}>
-        <h3>dashboard</h3>
+      <div className="containerGroup" style={{padding: 10}}>
+      <div className="description">
+      <h3>dashboard</h3>
         select the country, state and then the city you are interested in<br/><br/>
-        for example <h4>"Poland>Lesser Poland Voivodeship>Krakow"</h4><br/>
+        for example "Poland>Lesser Poland Voivodeship>Krakow"<br/><br/>
+      </div>
           <div>
           Country:
           <select id="selectCountry" onChange={this.selectCountry}>
@@ -55,20 +58,16 @@ class Display extends Component {
               ))
             }
           </select><br/>
-          Cities:<select id="selectCity" onChange={this.selectCity}>
+          City:<select id="selectCity" onChange={this.selectCity}>
             {
               citiesInState.map((city) => (
                 <option key={city.id} value={city.city} name={city.city}>{city.city}</option>
               ))
             }
-          </select>
-            {/* {
-              citiesInState.map(sIC => (
-                <div className="arrWrap">
-                  <p>{sIC.city}</p>
-                </div>
-              ))
-            } */}
+          </select><br/><br/>
+          {
+            specyfiedDataFromCity ? <SpecifiedDataDisplay/> : null
+          }
         </div>
       </div>
     );
@@ -82,6 +81,7 @@ const mapStateToProps = (state) => ({
   citiesInState: state.chosenCityReducer.citiesInState,
   countryState: state.choiceReducer.chosenCountry,
   stateState: state.choiceReducer.chosenState,
+  specifiedDataFromCity: state.chosenCityReducer.specifiedDataFromCity,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchAvaibleCountres: () => dispatch(fetchAvaibleCountres()),

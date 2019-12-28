@@ -7,7 +7,12 @@ const initialState = {
   nearestCity: [],
   statesInCountry: [],
   citiesInState: [],
-  specyfiedDataFromCity: []
+  specifiedDataFromCity: {
+    current: {
+      weather: {},
+      pollution: {},
+    },
+  },
 };
 
 export const chosenCityReducer = (state = initialState, action) => {
@@ -35,8 +40,8 @@ export const chosenCityReducer = (state = initialState, action) => {
     case FETCH_SPECIFIED_DATA_FROM_CITY:
       return {
         ...state,
-        specyfiedDataFromCity: action.data
-      }
+        specifiedDataFromCity: action.data,
+      };
     default:
       return state;
   }

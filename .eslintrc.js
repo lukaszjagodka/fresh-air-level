@@ -24,14 +24,14 @@ module.exports = {
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-console": "off",
-    // "import/prefer-default-export": 0,
-    "no-restricted-syntax": [
-      "error",
-      {
-          "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
-          "message": "Unexpected property on console object was called"
-      }
-  ],
-  "react/destructuring-assignment": ['always'],
+    "import/prefer-default-export": 0,
+  //   "no-restricted-syntax": [
+  //     "error",
+  //     {
+  //         "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+  //         "message": "Unexpected property on console object was called"
+  //     }
+  // ],
+  // "react/destructuring-assignment": ['always'],
   },
 };
