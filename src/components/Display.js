@@ -1,57 +1,74 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import fetchData from './FetchData';
-import { fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry } from '../actions/chosenCityActions';
+import { 
+  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity
+} from '../actions/chosenCityActions';
+import {
+  chosenCountry, chosenState
+} from '../actions/choiceActions';
 
 class Display extends Component {
   componentDidMount() {
     this.props.fetchAvaibleCountres();
     this.props.fetchNearestCity();
   }
-  selectCountry = e => {
-    const country = document.getElementById('selectCountryOne');
+ 
+  selectCountry = (e) => {
+    const country = document.getElementById('selectCountry');
     const index = country.selectedIndex;
-    console.log(country[index]);
-    this.props.fetchStatesInCountry(country.value, country[index].getAttribute('name'));
+    this.props.fetchStatesInCountry(country[index].getAttribute('value'));
+    this.props.chosenCountry(country[index].getAttribute('value'));
   }
-
+  selectState = (e) => {
+    const state = document.getElementById('selectState');
+    const index = state.selectedIndex;
+    const {countryState} = this.props;
+    this.props.fetchCitiesInState(state[index].getAttribute('value'), countryState);
+    this.props.chosenState(state[index].getAttribute('value'));
+  }
+  selectCity = (e) => {
+    const city = document.getElementById('selectCity');
+    const index = city.selectedIndex;
+    const {countryState, stateState} = this.props;
+    this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState )
+  }
   render() {
-    const { nearestCity, avaibleCoutres, statesInCountry } = this.props;
-    // const arrCC = Array.from(aveCountres);
-    // console.log(arrCC, 'test')
-    // console.log(aveCountres,'tiririr')
+    const { avaibleCoutres, statesInCountry, citiesInState } = this.props;
     return (
       <div className="containerGroup" style={{padding: 30}}>
         <h3>dashboard</h3>
         select the country, state and then the city you are interested in<br/><br/>
+        for example <h4>"Poland>Lesser Poland Voivodeship>Krakow"</h4><br/>
           <div>
-          <select id="selectCountryOne" onChange={this.selectCountry}>
+          Country:
+          <select id="selectCountry" onChange={this.selectCountry}>
             {
               avaibleCoutres.map((country) => (
                 <option key={country.id} value={country.country} name={country.country}>{country.country}</option>
               ))
             }
-          </select>
+          </select><br/>
+          State:<select id="selectState" onChange={this.selectState}>
             {
-              statesInCountry.map(sIC => (
-                <div className="arrWrap">
-                  <p>{sIC.state}</p>
-                </div>
+              statesInCountry.map((state) => (
+                <option key={state.id} value={state.state} name={state.state}>{state.state}</option>
               ))
             }
-          {/* { console.log(this.props.avaibleCoutres, 'available cities') }
-          { console.log(nearestCity, 'nearest city') } */}
-          {/* {
-            aveCountres.map((avC) => (
-              <div className="arrayWrapper" key={avC.index}>
-                <p>{avC.country}</p>
-              </div>
-            ))
-          } */}
-
-          {/* <div className="nearest-city">
-            {nearestCity.city}
-          </div> */}
+          </select><br/>
+          Cities:<select id="selectCity" onChange={this.selectCity}>
+            {
+              citiesInState.map((city) => (
+                <option key={city.id} value={city.city} name={city.city}>{city.city}</option>
+              ))
+            }
+          </select>
+            {/* {
+              citiesInState.map(sIC => (
+                <div className="arrWrap">
+                  <p>{sIC.city}</p>
+                </div>
+              ))
+            } */}
         </div>
       </div>
     );
@@ -62,10 +79,17 @@ const mapStateToProps = (state) => ({
   avaibleCoutres: state.chosenCityReducer.avaibleCoutres,
   nearestCity: state.chosenCityReducer.nearestCity,
   statesInCountry: state.chosenCityReducer.statesInCountry,
+  citiesInState: state.chosenCityReducer.citiesInState,
+  countryState: state.choiceReducer.chosenCountry,
+  stateState: state.choiceReducer.chosenState,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchAvaibleCountres: () => dispatch(fetchAvaibleCountres()),
   fetchNearestCity: () => dispatch(fetchNearestCity()),
   fetchStatesInCountry: (name) => dispatch(fetchStatesInCountry(name)),
+  fetchCitiesInState: (state, country) => dispatch(fetchCitiesInState(state, country)),
+  chosenCountry: (value) => dispatch(chosenCountry(value)),
+  chosenState: (value) => dispatch(chosenState(value)),
+  fetchSpecifiedDataFromCity: (city, state, country) => dispatch(fetchSpecifiedDataFromCity(city, state, country)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Display);
