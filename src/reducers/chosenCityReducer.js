@@ -1,5 +1,5 @@
 import {
-  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE,
+  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE, FETCH_SPECIFIED_DATA_FROM_CITY,
 } from '../actions/types';
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
   nearestCity: [],
   statesInCountry: [],
   citiesInState: [],
+  specyfiedDataFromCity: []
 };
 
 export const chosenCityReducer = (state = initialState, action) => {
@@ -31,6 +32,11 @@ export const chosenCityReducer = (state = initialState, action) => {
         ...state,
         citiesInState: action.data,
       };
+    case FETCH_SPECIFIED_DATA_FROM_CITY:
+      return {
+        ...state,
+        specyfiedDataFromCity: action.data
+      }
     default:
       return state;
   }
