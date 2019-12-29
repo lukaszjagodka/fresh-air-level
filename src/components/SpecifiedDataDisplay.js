@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function SpecifiedDataDisplay(props) {
-  const { specyfiedDataFromCity } = props;
-  const { weather, pollution } = specyfiedDataFromCity.current;
+  const { specifiedDataFromCity } = props;
+  const { weather, pollution } = specifiedDataFromCity.current;
   return (
       <div>
         <div className="blockOne">
         <h4>Data for: </h4>
-        <h2>{specyfiedDataFromCity.city}</h2>
+        <h2>{specifiedDataFromCity.city}</h2>
         Weather:
         <br />
         {weather.ts}
@@ -28,7 +28,7 @@ function SpecifiedDataDisplay(props) {
   );
 }
 const mapStateToProps = (state) => ({
-  specyfiedDataFromCity: state.chosenCityReducer.specyfiedDataFromCity,
+  specifiedDataFromCity: state.chosenCityReducer.specifiedDataFromCity,
 });
 
 export default connect(mapStateToProps, null)(SpecifiedDataDisplay);

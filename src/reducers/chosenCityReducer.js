@@ -18,9 +18,10 @@ const initialState = {
 export const chosenCityReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_AVAILBE_COUNTRES:
+      console.log(action.data);
       return {
         ...state,
-        avaibleCoutres: action.data,
+        avaibleCoutres: [{country: 'Choose a country'}, ...action.data],
       };
     case FETCH_NEAREST_CITY:
       return {
@@ -28,16 +29,19 @@ export const chosenCityReducer = (state = initialState, action) => {
         nearestCity: action.data,
       };
     case FETCH_STATE_IN_COUNTRY:
+      console.log(action.data);
       return {
         ...state,
-        statesInCountry: action.data,
+        statesInCountry: [{state: 'Choose a state'}, ...action.data],
       };
     case FETCH_CITIES_IN_STATE:
+      console.log(action.data);
       return {
         ...state,
-        citiesInState: action.data,
+        citiesInState: [{city: 'Choose a city'}, ...action.data],
       };
     case FETCH_SPECIFIED_DATA_FROM_CITY:
+      console.log(action.data);
       return {
         ...state,
         specifiedDataFromCity: action.data,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SpecifiedDataDisplay from './SpecyfiedDataDisplay'
+import SpecifiedDataDisplay from './SpecifiedDataDisplay'
 import { connect } from 'react-redux';
 import { 
   fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity
@@ -34,7 +34,7 @@ class Display extends Component {
     this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState )
   }
   render() {
-    const { avaibleCoutres, statesInCountry, citiesInState, specyfiedDataFromCity } = this.props;
+    const { avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity } = this.props;
     return (
       <div className="containerGroup" style={{padding: 10}}>
       <div className="description">
@@ -66,7 +66,7 @@ class Display extends Component {
             }
           </select><br/><br/>
           {
-            specyfiedDataFromCity ? <SpecifiedDataDisplay/> : null
+            specifiedDataFromCity ? <SpecifiedDataDisplay/> : null
           }
         </div>
       </div>

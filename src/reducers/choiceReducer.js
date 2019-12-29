@@ -3,7 +3,7 @@ import { FETCH_COUNTRY, FETCH_STATE, FETCH_CITY } from '../actions/types';
 const initialState = {
   chosenCountry: '',
   chosenState: '',
-  chosenCity: ''
+  chosenCity: '',
 };
 
 export const choiceReducer = (state = initialState, action) => {
@@ -21,8 +21,8 @@ export const choiceReducer = (state = initialState, action) => {
     case FETCH_CITY:
       return {
         ...state,
-        chosenCity: action.value
-      }
+        chosenCity: action.value,
+      };
     default:
       return state;
   }
