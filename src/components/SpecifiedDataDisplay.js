@@ -4,16 +4,12 @@ import { connect } from 'react-redux';
 function SpecifiedDataDisplay(props) {
   const { specifiedDataFromCity } = props;
   const { weather, pollution } = specifiedDataFromCity.current;
-  let tempDate = new Date();
-  let date = tempDate.getFullYear() + '-' + (tempDate.getMonth()+1) + '-' + tempDate.getDate();
   return (
       <div>
         <div className="blockOne">
         <h4>Data for: </h4>
         <h2>{specifiedDataFromCity.city}</h2>
         Weather:
-        <br />
-        {date}
         <br />
         temperature {weather.tp} Celsius
         <br />
