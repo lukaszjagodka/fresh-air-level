@@ -24,9 +24,11 @@ export const chosenCityReducer = (state = initialState, action) => {
         avaibleCoutres: [{country: 'Choose a country'}, ...action.data],
       };
     case FETCH_NEAREST_CITY:
+      console.log(action.data)
       return {
         ...state,
         nearestCity: action.data,
+        specifiedDataFromCity: action.data,
       };
     case FETCH_STATE_IN_COUNTRY:
       console.log(action.data);

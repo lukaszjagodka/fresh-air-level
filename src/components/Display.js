@@ -11,7 +11,6 @@ import {
 class Display extends Component {
   componentDidMount() {
     this.props.fetchAvaibleCountres();
-    this.props.fetchNearestCity();
   }
  
   selectCountry = (e) => {
@@ -32,6 +31,9 @@ class Display extends Component {
     const index = city.selectedIndex;
     const {countryState, stateState} = this.props;
     this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState )
+  }
+  nearestCity = () => {
+    this.props.fetchNearestCity();
   }
   render() {
     const { avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity } = this.props;
@@ -65,6 +67,7 @@ class Display extends Component {
               ))
             }
           </select><br/><br/>
+          <button onClick={this.nearestCity}>the nearest city of your location</button>
           {
             specifiedDataFromCity ? <SpecifiedDataDisplay/> : null
           }
