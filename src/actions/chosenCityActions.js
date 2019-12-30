@@ -77,22 +77,12 @@ export const fetchSpecifiedDataFromCity = (citySelected, stateSelected, countryS
 
 export const loadLocalStorage = () => (dispatch) => {
   const data = JSON.parse(localStorage.getItem('specifiedDataFromCity'));
-  // const watchList = JSON.parse(localStorage.getItem('watchList'));
   if (data) {
     dispatch({
       type: FETCH_SPECIFIED_DATA_FROM_CITY,
       data,
     });
   }
-  // if (watchList === undefined) {
-  //   console.log('undef watchList');
-  // } else {
-  //   localStorage.clear();
-  //   dispatch({
-  //     type: WATCH_LIST,
-  //     data: watchList,
-  //   });
-  // }
 };
 
 export const watchList = (data) => ({

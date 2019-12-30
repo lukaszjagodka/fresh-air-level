@@ -33,7 +33,6 @@ class Display extends Component {
     const index = city.selectedIndex;
     const {countryState, stateState} = this.props;
     this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState)
-    // window.localStorage.setItem('watchList', JSON.stringify(this.props.watchList));
     this.props.watchList();
   }
   nearestCity = () => {
@@ -43,11 +42,10 @@ class Display extends Component {
     const { avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity } = this.props;
     return (
       <div className="containerGroup" >
-      <div className="description">
-      <h3>dashboard</h3>
-        select the country, state and then the city you are interested in<br/><br/>
-      </div>
-          <div>
+        <div className="description">
+        <h3>dashboard</h3>
+          select the country, state and then the city you are interested in<br/><br/>
+        </div>
           Country:
           <select id="selectCountry" onChange={this.selectCountry}>
             {
@@ -71,13 +69,13 @@ class Display extends Component {
             }
           </select><br/><br/>
           <button onClick={this.nearestCity}>the nearest city of your location</button>
+          <div className="specDisplay">
           {
             specifiedDataFromCity ? <SpecifiedDataDisplay/> : null
           }
-          
-        </div>
+          </div>
         <div className="WList">
-          <WatchList/>
+            <WatchList/>
         </div>
       </div>
     );

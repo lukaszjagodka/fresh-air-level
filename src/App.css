@@ -36,16 +36,32 @@
     transform: rotate(360deg);
   }
 }
-
 .blockOne{
   padding-left: 20px;
-  height: 250px;
-  width: 250px;
+  height: 230px;
+  width: 220px;
   float: left;
 }
 .blockTwo{
-  padding-top: 50px;
-  height: 250px;
-  width: 90%;
+  padding-top: 80px;
+  height: 150px;
+  width: 15%;
+  float: left;
 }
-
+.WList{
+  float: left;
+}
+.watchListDisplay{
+  width: 350px;
+  height: 100%;
+  float: left;
+}
+.wrCity{
+  padding-left: 20px;
+  height: 165px;
+  width: 190px;
+  float: left;
+}
+.imageCity{
+  height: 120px;
+}
