@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import SpecifiedDataDisplay from './SpecifiedDataDisplay'
 import { connect } from 'react-redux';
 import { 
-  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity, loadLocalStorage
+  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity, loadLocalStorage, watchList
 } from '../actions/chosenCityActions';
 import {
   chosenCountry, chosenState
 } from '../actions/choiceActions';
+import WatchList from './WatchList';
 
 class Display extends Component {
   componentDidMount() {
@@ -31,7 +32,9 @@ class Display extends Component {
     const city = document.getElementById('selectCity');
     const index = city.selectedIndex;
     const {countryState, stateState} = this.props;
-    this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState )
+    this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState)
+    // window.localStorage.setItem('watchList', JSON.stringify(this.props.watchList));
+    this.props.watchList();
   }
   nearestCity = () => {
     this.props.fetchNearestCity();
@@ -39,11 +42,10 @@ class Display extends Component {
   render() {
     const { avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity } = this.props;
     return (
-      <div className="containerGroup" style={{padding: 10}}>
+      <div className="containerGroup" >
       <div className="description">
       <h3>dashboard</h3>
         select the country, state and then the city you are interested in<br/><br/>
-        for example "Poland>Lesser Poland Voivodeship>Krakow"<br/><br/>
       </div>
           <div>
           Country:
@@ -72,6 +74,10 @@ class Display extends Component {
           {
             specifiedDataFromCity ? <SpecifiedDataDisplay/> : null
           }
+          
+        </div>
+        <div className="WList">
+          <WatchList/>
         </div>
       </div>
     );
@@ -86,6 +92,7 @@ const mapStateToProps = (state) => ({
   countryState: state.choiceReducer.chosenCountry,
   stateState: state.choiceReducer.chosenState,
   specifiedDataFromCity: state.chosenCityReducer.specifiedDataFromCity,
+  watchListt: state.chosenCityReducer.watchList,
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchAvaibleCountres: () => dispatch(fetchAvaibleCountres()),
@@ -96,5 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
   chosenState: (value) => dispatch(chosenState(value)),
   fetchSpecifiedDataFromCity: (city, state, country) => dispatch(fetchSpecifiedDataFromCity(city, state, country)),
   loadLocalStorage: () => dispatch(loadLocalStorage()),
+  watchList: (data) => dispatch(watchList(data)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Display);

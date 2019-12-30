@@ -1,5 +1,5 @@
 import {
-  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE, FETCH_SPECIFIED_DATA_FROM_CITY,
+  FETCH_AVAILBE_COUNTRES, FETCH_NEAREST_CITY, FETCH_STATE_IN_COUNTRY, FETCH_CITIES_IN_STATE, FETCH_SPECIFIED_DATA_FROM_CITY, WATCH_LIST,
 } from './types';
 import { API_KEY } from '../config/config';
 
@@ -13,7 +13,9 @@ export const fetchAvaibleCountres = () => (dispatch) => {
           data: updateAvaibleCountres.data,
         });
       }
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+    });
 };
 
 export const fetchNearestCity = () => (dispatch) => {
@@ -68,15 +70,32 @@ export const fetchSpecifiedDataFromCity = (citySelected, stateSelected, countryS
         type: FETCH_SPECIFIED_DATA_FROM_CITY,
         data: res.data,
       });
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+    });
 };
 
 export const loadLocalStorage = () => (dispatch) => {
   const data = JSON.parse(localStorage.getItem('specifiedDataFromCity'));
+  // const watchList = JSON.parse(localStorage.getItem('watchList'));
   if (data) {
     dispatch({
       type: FETCH_SPECIFIED_DATA_FROM_CITY,
       data,
     });
   }
+  // if (watchList === undefined) {
+  //   console.log('undef watchList');
+  // } else {
+  //   localStorage.clear();
+  //   dispatch({
+  //     type: WATCH_LIST,
+  //     data: watchList,
+  //   });
+  // }
 };
+
+export const watchList = (data) => ({
+  type: WATCH_LIST,
+  data,
+});
