@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.blockOne{
+  padding-left: 20px;
+  height: 250px;
+  width: 250px;
+  float: left;
+}
+.blockTwo{
+  padding-top: 50px;
+  height: 250px;
+  width: 90%;
+}
+

@@ -5,7 +5,7 @@ function SpecifiedDataDisplay(props) {
   const { specifiedDataFromCity } = props;
   const { weather, pollution } = specifiedDataFromCity.current;
   return (
-      <div>
+      <div className="displayblocks">
         <div className="blockOne">
         <h4>Data for: </h4>
         <h2>{specifiedDataFromCity.city}</h2>
@@ -19,8 +19,10 @@ function SpecifiedDataDisplay(props) {
         <br />
         wind speed {weather.ws} (m/s)
         <br />
-        Pollution:{pollution.aqius}
-        <img src={`/images/${weather.ic}.png`} alt="" width='150px'/>
+        Pollution: {pollution.aqius} PM2,5
+        </div>
+        <div className="blockTwo">
+          <img src={`/images/${weather.ic}.png`} alt="" width='150px'/>
         </div>
     </div>
   );

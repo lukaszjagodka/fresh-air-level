@@ -35,7 +35,6 @@ export const fetchStatesInCountry = (country) => (dispatch) => {
   fetch(`http://api.airvisual.com/v2/states?country=${country}&key=${API_KEY}`)
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
       if (data) {
         dispatch({
           type: FETCH_STATE_IN_COUNTRY,
@@ -64,9 +63,20 @@ export const fetchSpecifiedDataFromCity = (citySelected, stateSelected, countryS
   fetch(`http://api.airvisual.com/v2/city?city=${citySelected}&state=${stateSelected}&country=${countrySelected}&key=${API_KEY}`)
     .then((res) => res.json())
     .then((res) => {
+      window.localStorage.setItem('specifiedDataFromCity', JSON.stringify(res.data));
       dispatch({
         type: FETCH_SPECIFIED_DATA_FROM_CITY,
         data: res.data,
       });
     }).catch((err) => console.log(err));
+};
+
+export const loadLocalStorage = () => (dispatch) => {
+  const data = JSON.parse(localStorage.getItem('specifiedDataFromCity'));
+  if (data) {
+    dispatch({
+      type: FETCH_SPECIFIED_DATA_FROM_CITY,
+      data,
+    });
+  }
 };

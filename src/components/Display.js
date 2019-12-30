@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SpecifiedDataDisplay from './SpecifiedDataDisplay'
 import { connect } from 'react-redux';
 import { 
-  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity
+  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity, loadLocalStorage
 } from '../actions/chosenCityActions';
 import {
   chosenCountry, chosenState
@@ -11,6 +11,7 @@ import {
 class Display extends Component {
   componentDidMount() {
     this.props.fetchAvaibleCountres();
+    this.props.loadLocalStorage();
   }
  
   selectCountry = (e) => {
@@ -94,5 +95,6 @@ const mapDispatchToProps = (dispatch) => ({
   chosenCountry: (value) => dispatch(chosenCountry(value)),
   chosenState: (value) => dispatch(chosenState(value)),
   fetchSpecifiedDataFromCity: (city, state, country) => dispatch(fetchSpecifiedDataFromCity(city, state, country)),
+  loadLocalStorage: () => dispatch(loadLocalStorage()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Display);
