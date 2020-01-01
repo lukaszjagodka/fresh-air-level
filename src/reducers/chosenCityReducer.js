@@ -7,7 +7,7 @@ const initialState = {
   avaibleCoutres: [],
   nearestCity: [],
   statesInCountry: [],
-  citiesInState: [],
+  citiesInState: [{ city: 'Choose a city' }],
   specifiedDataFromCity: {
     id: 0,
     current: {
@@ -20,9 +20,10 @@ const initialState = {
 export const chosenCityReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_AVAILBE_COUNTRES:
+      const data = action.data;
       return {
         ...state,
-        avaibleCoutres: [{ country: 'Choose a country' }, ...action.data],
+        avaibleCoutres: [{ country: 'Choose a country' }, ...data],
       };
     case FETCH_NEAREST_CITY:
       return {
@@ -31,14 +32,16 @@ export const chosenCityReducer = (state = initialState, action) => {
         specifiedDataFromCity: action.data,
       };
     case FETCH_STATE_IN_COUNTRY:
+      const stateData = action.data;
       return {
         ...state,
-        statesInCountry: [{ state: 'Choose a state' }, ...action.data],
+        statesInCountry: [{ state: 'Choose a state' }, ...stateData],
       };
     case FETCH_CITIES_IN_STATE:
+      const citiesData = action.data;
       return {
         ...state,
-        citiesInState: [{ city: 'Choose a city' }, ...action.data],
+        citiesInState: [{ state: 'Choose a state' }, ...citiesData],
       };
     case FETCH_SPECIFIED_DATA_FROM_CITY:
       let { id } = state.specifiedDataFromCity;

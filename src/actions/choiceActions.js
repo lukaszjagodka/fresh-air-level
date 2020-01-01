@@ -13,4 +13,4 @@ export const chosenState = (value) => ({
 export const chosenCity = (value) => ({
   type: FETCH_CITY,
   value,
-})
+});
