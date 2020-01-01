@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import SpecifiedDataDisplay from './SpecifiedDataDisplay'
 import { connect } from 'react-redux';
-import { 
-  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity, loadLocalStorage, watchList
+import SpecifiedDataDisplay from './SpecifiedDataDisplay';
+import {
+  fetchAvaibleCountres, fetchNearestCity, fetchStatesInCountry, fetchCitiesInState, fetchSpecifiedDataFromCity, loadLocalStorage, watchList,
 } from '../actions/chosenCityActions';
 import {
-  chosenCountry, chosenState
+  chosenCountry, chosenState,
 } from '../actions/choiceActions';
 import WatchList from './WatchList';
 
@@ -14,68 +14,94 @@ class Display extends Component {
     this.props.fetchAvaibleCountres();
     this.props.loadLocalStorage();
   }
- 
+
   selectCountry = (e) => {
     const country = document.getElementById('selectCountry');
     const index = country.selectedIndex;
     this.props.fetchStatesInCountry(country[index].getAttribute('value'));
     this.props.chosenCountry(country[index].getAttribute('value'));
   }
+
   selectState = (e) => {
     const state = document.getElementById('selectState');
     const index = state.selectedIndex;
-    const {countryState} = this.props;
+    const { countryState } = this.props;
     this.props.fetchCitiesInState(state[index].getAttribute('value'), countryState);
     this.props.chosenState(state[index].getAttribute('value'));
   }
+
   selectCity = (e) => {
     const city = document.getElementById('selectCity');
     const index = city.selectedIndex;
-    const {countryState, stateState} = this.props;
-    this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState)
+    const { countryState, stateState } = this.props;
+    this.props.fetchSpecifiedDataFromCity(city[index].getAttribute('value'), stateState, countryState);
     this.props.watchList();
   }
+
   nearestCity = () => {
     this.props.fetchNearestCity();
   }
+
   render() {
-    const { avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity } = this.props;
+    const {
+      avaibleCoutres, statesInCountry, citiesInState, specifiedDataFromCity, chosenCountry, chosenState,
+    } = this.props;
     return (
-      <div className="containerGroup" >
+      <div className="containerGroup">
         <div className="description">
-        <h3>dashboard</h3>
-          select the country, state and then the city you are interested in<br/><br/>
+          <h3>dashboard</h3>
+          select the country, state and then the city you are interested in
         </div>
-          Country:
-          <select id="selectCountry" onChange={this.selectCountry}>
-            {
-              avaibleCoutres.map((country) => (
-                <option key={country.id} value={country.country} name={country.country}>{country.country}</option>
-              ))
-            }
-          </select><br/>
-          State:<select id="selectState" onChange={this.selectState}>
-            {
-              statesInCountry.map((state) => (
-                <option key={state.id} value={state.state} name={state.state}>{state.state}</option>
-              ))
-            }
-          </select><br/>
-          City:<select id="selectCity" onChange={this.selectCity}>
-            {
-              citiesInState.map((city) => (
-                <option key={city.id} value={city.city} name={city.city}>{city.city}</option>
-              ))
-            }
-          </select><br/><br/>
-          <button onClick={this.nearestCity}>the nearest city of your location</button>
-          <div className="specDisplay">
+        <p>
+          <span>Country:</span>
           {
-            specifiedDataFromCity ? <SpecifiedDataDisplay/> : null
+            chosenCountry ? (
+              <select id="selectCountry" onChange={this.selectCountry}>
+              {
+                avaibleCoutres.map((country) => (
+                  <option key={country.id} value={country.country} name={country.country}>{country.country}</option>
+                ))
+              }
+              </select>
+            ) : null
           }
-          </div>
+        </p>
+        <p>
+          <span>State:</span>
+          {
+            chosenState ? (
+              <select id="selectState" onChange={this.selectState}>
+              {
+                statesInCountry.map((state) => (
+                  <option key={state.id} value={state.state} name={state.state}>{state.state}</option>
+                ))
+              }
+              </select>
+            ) : null
+          }
+        </p>
+        <p>
+          <span>City:</span>
+          {
+            chosenState ? (
+              <select id="selectCity" onChange={this.selectCity}>
+              {
+                  citiesInState.map((city) => (
+                    <option key={city.id} value={city.city} name={city.city}>{city.city}</option>
+                  ))
+                }
+              </select>
+            ) : null
+          }
+        </p>
+        <button onClick={this.nearestCity}>the nearest city of your location</button>
+        <div className="specDisplay">
+          {
+            specifiedDataFromCity ? <SpecifiedDataDisplay /> : null
+          }
+        </div>
         <div className="WList">
-            <WatchList/>
+          <WatchList />
         </div>
       </div>
     );

@@ -7,7 +7,7 @@ const initialState = {
   avaibleCoutres: [],
   nearestCity: [],
   statesInCountry: [],
-  citiesInState: [{ city: 'Choose a city' }],
+  citiesInState: [],
   specifiedDataFromCity: {
     id: 0,
     current: {
@@ -20,10 +20,10 @@ const initialState = {
 export const chosenCityReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_AVAILBE_COUNTRES:
-      const data = action.data;
+      const countryData = action.data;
       return {
         ...state,
-        avaibleCoutres: [{ country: 'Choose a country' }, ...data],
+        avaibleCoutres: [{ country: 'Choose a country' }, ...countryData],
       };
     case FETCH_NEAREST_CITY:
       return {
